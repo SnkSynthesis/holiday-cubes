@@ -28,6 +28,8 @@ class Test(mglw.WindowConfig):
             near=0.1,
             far=1000.0
         )
+
+        self.camera.set_position(0, 0, -2)
     
     def key_event(self, key, action, modifiers):
         keys = self.wnd.keys
