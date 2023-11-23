@@ -1,9 +1,8 @@
 
 import moderngl as mgl
 import moderngl_window as mglw
-import numpy as np
 from pathlib import Path
-from cube import Cube
+from block import Block
 
 # This class inherits from moderngl_window's WindowConfig class
 # The WindowConfig creates a window and sets up the OpenGL (low-level graphics interface written in C)
@@ -22,8 +21,12 @@ class Test(mglw.WindowConfig):
             vertex_shader='shaders/vertexshader.glsl',  # this handles vertices (or positions)
             fragment_shader='shaders/fragmentshader.glsl'  # this handles the colors
         )
+        self.shader_prog['texture0'].value = 0
 
-        self.cube1 = Cube(self.ctx, self.shader_prog)
+        self.cube1 = Block('grass', self.ctx, self.shader_prog)
+        self.tex = self.load_texture_2d('images/atlas.png', mimap=True, anisotrpy=0.0)
+        self.tex.filter = (mgl.NEAREST, mgl.NEAREST)  # set to NEAREST for pixelated look
+
 
         # Simple camera class from moderngl window to move around world with keyboard and mouse
         self.camera = mglw.scene.KeyboardCamera(
@@ -53,7 +56,7 @@ class Test(mglw.WindowConfig):
         self.ctx.clear(0.0, 0.0, 0.0, 0.0)
         self.shader_prog["m_proj"].write(self.camera.projection.matrix)
         self.shader_prog["m_modelview"].write(self.camera.matrix)
-        # self.vao.render()
+        self.tex.use(location=0)
         self.cube1.render()
 
         
