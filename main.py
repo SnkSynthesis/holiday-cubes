@@ -19,8 +19,8 @@ class Test(mglw.WindowConfig):
 
         # Load shader program (programs that process graphics data on GPU)
         self.shader_prog = self.load_program(
-            vertex_shader='vertexshader.glsl',  # this handles vertices (or positions)
-            fragment_shader='fragmentshader.glsl'  # this handles the colors
+            vertex_shader='shaders/vertexshader.glsl',  # this handles vertices (or positions)
+            fragment_shader='shaders/fragmentshader.glsl'  # this handles the colors
         )
 
         self.cube1 = Cube(self.ctx, self.shader_prog)
