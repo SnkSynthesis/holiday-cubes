@@ -22,7 +22,7 @@ class Chunk:
         Call only if add_block() calls are over with.
         """
         self.vbo = self.ctx.buffer(np.array(self.vertices, dtype="f4"))
-        self.vao = self.ctx.vertex_array(self.shader_prog, [(self.vbo, '3f 2f', 'in_pos', 'in_tex_coord')])
+        self.vao = self.ctx.vertex_array(self.shader_prog, [(self.vbo, '3f 2f 1f', 'in_pos', 'in_tex_coord', 'in_ambient')])
     
 
     def render(self):
