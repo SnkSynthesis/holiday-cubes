@@ -35,21 +35,23 @@ class App(mglw.WindowConfig):
         self.blocks = []
         for i in range(100):
             for j in range(100):
-                c = Block(self.ctx, self.shader_prog)
-                c.add_block(
-                    random.choice(
+                b = Block(random.choice(
                         [
                             "sand",
                             "dirt",
                             "stone",
                         ]
-                    ),
+                    ), self.ctx, self.shader_prog)
+                # add one block to mesh
+                b.pos = (           
                     i,
                     random.randint(0, 200),
                     j,
                 )
-                c.init()
-                self.blocks.append(c)
+                # initialize mesh
+                b.init()
+                # add to list
+                self.blocks.append(b)
 
         # load texture (all textures combined into one image for performance and ease of use)
         self.tex = self.load_texture_2d("images/atlas.png", mimap=True, anisotrpy=0.0)
@@ -106,18 +108,9 @@ class App(mglw.WindowConfig):
         self.tex.use(location=0)
 
         # Renders blocks and updates rotation values for each and every block
-        for block in self.blocks:
-            # update angle of rotation
-            block.angle += block.d_angle * random.randint(1, 5) * 1 * frametime
-
-            # rotation matrix
-            rot = glm.rotate(glm.mat4(1.0), block.angle, glm.vec3(*block.pos))
-
-            # send rotation and light_color to GPU (received by shaders)
-            self.shader_prog["m_transformation"].write(rot)
-            self.shader_prog["rgb_light_color"].write(block.color)
-
-            block.render()
+        for b in self.blocks:
+            b.update(time, frametime)
+            b.render()
 
 
 if __name__ == "__main__":

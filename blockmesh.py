@@ -5,7 +5,7 @@ import glm
 
 
 class Block:
-    def __init__(self, ctx, shader_prog):
+    def __init__(self, block_type, ctx, shader_prog):
         self.ctx = ctx  # OpenGL context
         self.shader_prog = shader_prog  # helps us connect to shaders
         self.vbo = None  # object that holds vertex data
@@ -15,8 +15,11 @@ class Block:
         # vertices that hold data that GPU needs to draw on to screen
         self.vertices = []
 
+        # type of block e.g. sand, dirt, stone, etc.
+        self.block_type = block_type
+
         # angle in degrees
-        self.angle = 0
+        self.angle = 0.0
 
         # block.d_angle whether change in angle should be positive or negative
         self.d_angle = random.choice([-1, 1])
@@ -31,14 +34,27 @@ class Block:
             ]
         )
 
-    def add_block(self, block_type, x, y, z):
-        self.vertices.append(block.new_block(block_type, x, y, z))
-        self.pos = (x, y, z)
+        self.pos = (0, 0, 0)
+    
+    def update(self, time, frametime):
+        """
+        Updates rotation and sends updated values to GPU
+        """
+        # update angle of rotation
+        self.angle += self.d_angle * random.randint(1, 5) * 1 * frametime
+
+        # rotation matrix
+        rot = glm.rotate(glm.mat4(1.0), self.angle, glm.vec3(*self.pos))
+
+        # send rotation and light_color to GPU (received by shaders)
+        self.shader_prog["m_transformation"].write(rot)
+        self.shader_prog["rgb_light_color"].write(self.color)
 
     def init(self):
         """
-        Call only if add_block() calls are over with.
+        Initialization code
         """
+        self.vertices.append(block.new_block(self.block_type, *self.pos))
         self.vbo = self.ctx.buffer(np.array(self.vertices, dtype="f4"))
         self.vao = self.ctx.vertex_array(
             self.shader_prog,
