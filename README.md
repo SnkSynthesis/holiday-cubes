@@ -1,7 +1,7 @@
 # ENGR114Exam2Project
 This is a holiday edition rotating cubes simulation
 
-[Screenshot](./screenshot.png)
+![Screenshot](./screenshot.png)
 
 ## Install dependencies
 ```
