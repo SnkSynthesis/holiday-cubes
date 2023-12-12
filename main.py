@@ -37,7 +37,13 @@ class App(mglw.WindowConfig):
             for j in range(100):
                 c = Block(self.ctx, self.shader_prog)
                 c.add_block(
-                    random.choice(["sand", "dirt", "stone",]),
+                    random.choice(
+                        [
+                            "sand",
+                            "dirt",
+                            "stone",
+                        ]
+                    ),
                     i,
                     random.randint(0, 200),
                     j,
@@ -94,18 +100,23 @@ class App(mglw.WindowConfig):
         # clear screen
         self.ctx.clear(*util.rgb255_to_rgb1(0, 0, 0), 0.0)
 
-        
-
         # set variables in shader
         self.shader_prog["m_proj"].write(self.camera.projection.matrix)
         self.shader_prog["m_view"].write(self.camera.matrix)
         self.tex.use(location=0)
 
+        # Renders blocks and updates rotation values for each and every block
         for block in self.blocks:
+            # update angle of rotation
             block.angle += block.d_angle * random.randint(1, 5) * 1 * frametime
+
+            # rotation matrix
             rot = glm.rotate(glm.mat4(1.0), block.angle, glm.vec3(*block.pos))
-            self.shader_prog["m_transformation"].write(glm.mat4(1.0) * rot)
+
+            # send rotation and light_color to GPU (received by shaders)
+            self.shader_prog["m_transformation"].write(rot)
             self.shader_prog["rgb_light_color"].write(block.color)
+
             block.render()
 
 

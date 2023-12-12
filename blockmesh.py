@@ -3,6 +3,7 @@ import block
 import numpy as np
 import glm
 
+
 class Block:
     def __init__(self, ctx, shader_prog):
         self.ctx = ctx  # OpenGL context
@@ -14,9 +15,21 @@ class Block:
         # vertices that hold data that GPU needs to draw on to screen
         self.vertices = []
 
+        # angle in degrees
         self.angle = 0
+
+        # block.d_angle whether change in angle should be positive or negative
         self.d_angle = random.choice([-1, 1])
-        self.color = random.choice([glm.vec3(0, 255, 17), glm.vec3(255, 43, 43), glm.vec3(242, 255, 0), glm.vec3(0, 94, 255)])
+
+        # randomly chooses one of the given colors (in RGB vectors)
+        self.color = random.choice(
+            [
+                glm.vec3(0, 255, 17),
+                glm.vec3(255, 43, 43),
+                glm.vec3(242, 255, 0),
+                glm.vec3(0, 94, 255),
+            ]
+        )
 
     def add_block(self, block_type, x, y, z):
         self.vertices.append(block.new_block(block_type, x, y, z))
