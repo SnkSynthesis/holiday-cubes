@@ -1,7 +1,7 @@
 import random
 import block
 import numpy as np
-
+import glm
 
 class Block:
     def __init__(self, ctx, shader_prog):
@@ -16,6 +16,7 @@ class Block:
 
         self.angle = 0
         self.d_angle = random.choice([-1, 1])
+        self.color = random.choice([glm.vec3(0, 255, 17), glm.vec3(255, 43, 43), glm.vec3(242, 255, 0), glm.vec3(0, 94, 255)])
 
     def add_block(self, block_type, x, y, z):
         self.vertices.append(block.new_block(block_type, x, y, z))

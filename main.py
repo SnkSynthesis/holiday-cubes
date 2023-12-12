@@ -37,7 +37,7 @@ class App(mglw.WindowConfig):
             for j in range(100):
                 c = Block(self.ctx, self.shader_prog)
                 c.add_block(
-                    random.choice(["sand", "dirt", "stone"]),
+                    random.choice(["sand", "dirt", "stone",]),
                     i,
                     random.randint(0, 200),
                     j,
@@ -89,10 +89,10 @@ class App(mglw.WindowConfig):
         self.fpstime += frametime
         self.frames += 1
         if self.fpstime > 1.0:
-            self.wnd.title = f"FPS: {int(self.frames / self.fpstime)}"
+            self.wnd.title = f"Happy Holidays! FPS: {int(self.frames / self.fpstime)}"
 
         # clear screen
-        self.ctx.clear(*util.rgb255_to_rgb1(41, 45, 71), 0.0)
+        self.ctx.clear(*util.rgb255_to_rgb1(0, 0, 0), 0.0)
 
         
 
@@ -105,6 +105,7 @@ class App(mglw.WindowConfig):
             block.angle += block.d_angle * random.randint(1, 5) * 1 * frametime
             rot = glm.rotate(glm.mat4(1.0), block.angle, glm.vec3(*block.pos))
             self.shader_prog["m_transformation"].write(glm.mat4(1.0) * rot)
+            self.shader_prog["rgb_light_color"].write(block.color)
             block.render()
 
 
