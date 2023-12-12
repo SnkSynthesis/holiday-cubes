@@ -1,4 +1,6 @@
 from texture_atlas import get_tex_coords
+
+
 def new_block(block_type, x, y, z):
     left_tex_coords = get_tex_coords(block_type, 'left')
     right_tex_coords = get_tex_coords(block_type, 'right')
@@ -17,12 +19,12 @@ def new_block(block_type, x, y, z):
         -0.5, -0.5, -0.5, *left_tex_coords[5], 0.8,
 
         # right
-        -0.5, -0.5,  0.5, *right_tex_coords[0], 0.85,
-        0.5, -0.5,  0.5,  *right_tex_coords[1], 0.85,
-        0.5,  0.5,  0.5,  *right_tex_coords[2], 0.85,
-        0.5,  0.5,  0.5,  *right_tex_coords[3], 0.85,
-        -0.5,  0.5,  0.5, *right_tex_coords[4], 0.85,
-        -0.5, -0.5,  0.5, *right_tex_coords[5], 0.85,
+        -0.5, -0.5,  0.5, *right_tex_coords[0], 0.45,
+        0.5, -0.5,  0.5,  *right_tex_coords[1], 0.45,
+        0.5,  0.5,  0.5,  *right_tex_coords[2], 0.45,
+        0.5,  0.5,  0.5,  *right_tex_coords[3], 0.45,
+        -0.5,  0.5,  0.5, *right_tex_coords[4], 0.45,
+        -0.5, -0.5,  0.5, *right_tex_coords[5], 0.45,
 
         # front
         -0.5,  0.5,  0.5, *front_tex_coords[0], 0.65,

@@ -8,10 +8,11 @@ out vec2 tex_coord;
 out float ambient_val;
 
 uniform mat4 m_proj;
-uniform mat4 m_modelview;
+uniform mat4 m_view;
+uniform mat4 m_transformation;
 
 void main() {
-    gl_Position = m_proj * m_modelview * vec4(in_pos, 1.0);
+    gl_Position = m_proj * m_view * m_transformation * vec4(in_pos, 1.0);
     tex_coord = in_tex_coord;
     ambient_val = in_ambient;
 }
