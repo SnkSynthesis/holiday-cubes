@@ -1,4 +1,4 @@
-# ENGR114Exam2Project
+# Holiday Cubes
 This is a holiday edition rotating cubes simulation
 
 ![Screenshot](./screenshot.png)
